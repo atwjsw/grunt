@@ -1,0 +1,66 @@
+#Grunt 51CTO教程
+http://developer.51cto.com/art/201506/479127.htm###
+
+##安装grunt-cli
+npm install grunt-cli -g
+
+##创建package.json
+
+##安装grunt
+npm install grunt --save-dev
+
+##配置Gruntfile.js
+  //包装函数
+  module.exports = function(grunt) {
+    //任务配置，所有插件的配置信息
+    grunt.initConfig({
+      //获取package.json的信息
+      pkg: grunt.file.readJSON('package.json')
+    });  
+    //告诉grunt当我们在终端中输入grunt时需要做些什么（注意先后顺序）
+    grunt.registerTask('default', []);  
+  }
+
+##Grunt插件
+- grunt官网的插件列表页面 http://www.gruntjs.net/plugins
+- 插件分为两类。第一类是grunt团队贡献的插件，这些插件的名字前面都带有“contrib-”前缀，而且在插件列表中有星号标注。
+- 第二类是第三方提供的插件，不带有这两个特征
+- 前几名插件
+Contrib-jshint——javascript语法错误检查；
+Contrib-watch——实时监控文件变化、调用相应的任务重新执行；
+Contrib-clean——清空文件、文件夹；
+Contrib-uglify——压缩javascript代码
+Contrib-copy——复制文件、文件夹
+Contrib-concat——合并多个文件的代码到一个文件中
+karma——前端自动化测试工具
+
+##使用uglify插件
+- Uglify插件的功能就是压缩javascript代码。
+- npm install grunt-contrib-uglify --save-dev
+- 配置Gruntfile.js：banner+文件版本名
+
+##cssmin插件
+- Javascript使用uglify压缩，css可使用cssmin插件压缩。安装、配置方法一样的，不再赘述。
+
+##使用jshint插件
+- 检查javascript语法错误
+- npm install grunt-contrib-jshint --save-dev
+- 配置Gruntfile.js：配置.jshintrc文件中的选项，想详细了解可以去百度搜索“jshint 配置”关键字
+
+##使用watch插件（真正实现自动化）
+- 文件更新后，自动执行grunt任务
+- npm install grunt-contrib-watch --save-dev
+- 配置Gruntfile.js：配置.jshintrc文件中的选项，想详细了解可以去百度搜索“jshint 配置”关键字
+
+##上文中所谓的“build”
+上文中描述各个插件的配置时，都是用了“build”这一名称作为一个配置项。
+那么这里是不是必须用“build”这一个名字？答案很明显，当然不是
+这里可以用任何字符串代替“build”（但要符合js语法规则）。甚至，你可以把“build”指向的内容分开来写。这样对多人协同开发很友好。
+
+##批量安装插件
+-  问题又来了，我如果作为开发环境的搭建者，我不把“node_modules”上传，其他一起开发的人，怎么得到这些grunt插件和工具呢？
+-  其实答案很简单——我上传源码时候，肯定会把package.json上传上去，而package.json中的“devDependencies”就记录了这个系统的开发依赖项，然后我通过nodejs的npm即可批量安装。
+-  npm install
+
+##系统文件结构
+-- 使用grunt来搭建web前端开发环境时候，文档目录和之前可能就不一样了。因为你手动写的代码文件，绝对不是你最终输出的文件。这些还需要经过grunt各种插件的检验、合并、压缩才能最终输出给用户
